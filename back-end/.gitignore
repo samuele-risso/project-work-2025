@@ -1,0 +1,53 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*.local
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Coverage output
+coverage/
+
+# Optional: If you're using next.js or other frameworks
+.next/
+.cache/
+
+# Optional: if using pnpm
+.pnpm-debug.log
+
+# Optional: If using turbo repo or similar tools
+turbo/
+
+# Optional: If using bun
+.bun/
+
+# Optional: if using PM2
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional: If using WebStorm or other JetBrains IDEs
+.idea/
