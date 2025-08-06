@@ -1,34 +1,18 @@
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
-
-interface Todo {
-    id: number;
-    task: string;
-    completed: boolean;
-}
+import express from 'express';
+import { Request, Response } from 'express';
+var cors = require('cors')
 
 const app = express();
-app.use(bodyParser.json());
-let todos: Todo[] = [
-    {id: 1, task: "Take out trash", completed: false},
-    {id: 2, task: "Do laundry", completed: true}
-];
+const PORT = process.env.SERVER_PORT;
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World");
-});
+app.use(cors({
+  origin: process.env.CLIENT_BASE_URL
+}));
 
+app.use(express.json()); 
 
-app.get('/todos', (req: Request, res: Response) => {
-    res.send(todos);
-});
+app.get('/');
 
-app.post('/todos', (req: Request, res: Response) => {
-    const newTodo: Todo = req.body;
-    todos.push(newTodo);
-    res.send(newTodo);
-});
-
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
