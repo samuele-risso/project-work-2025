@@ -1,9 +1,30 @@
-import Link from "next/link"
+// components/button.tsx
+"use client"
 
-export default function Button() {
+import Link from "next/link"
+import { useRouter } from "next/navigation";
+
+// Definisci le prop che il componente può accettare
+interface ButtonProps {
+    onClick?: () => void; // `?` rende la prop opzionale
+    href?: string; // anche `href` è opzionale
+    children?: React.ReactNode; // per gestire il contenuto interno
+}
+
+export default function Button({ onClick, href, children }: ButtonProps) {
+    const router = useRouter();
+
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        } else if (href) {
+            router.push(href);
+        }
+    };
     return (
         <Link
             href="/"
+            onClick={handleClick}
             className="flex justify-center items-center bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
         >
             <div
@@ -25,7 +46,9 @@ export default function Button() {
                     ></path>
                 </svg>
             </div>
-            <p className="translate-x-2">Home</p>
+            <p className="translate-x-2">
+                {children ? children : 'Home'}
+            </p>
         </Link>
     )
 }

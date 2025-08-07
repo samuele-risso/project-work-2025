@@ -1,30 +1,35 @@
 "use client"
 import React, { useState } from 'react';
 
-export default function FileUploader() {
+interface FileUploaderProps {
+  onFileChange: (file: File) => void;
+}
+
+export default function FileUploader({ onFileChange }: FileUploaderProps) {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]; // Usa l'optional chaining per sicurezza
+    const handleFile = (file: File | null) => {
         if (file && file.type.startsWith('image/')) {
             const imageUrl = URL.createObjectURL(file);
             setSelectedImage(imageUrl);
+            onFileChange(file);
         } else {
             setSelectedImage(null);
-            alert("Per favore, seleziona un file immagine.");
+            if (file) {
+                alert("Per favore, seleziona un file immagine.");
+            }
         }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] || null;
+        handleFile(file);
     };
 
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
-        } else {
-            setSelectedImage(null);
-            alert("Per favore, rilascia un file immagine.");
-        }
+        const file = event.dataTransfer.files[0] || null;
+        handleFile(file);
     };
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -61,7 +66,6 @@ export default function FileUploader() {
                                 </span>
                             </div>
                         )}
-
                         <input
                             name="file-upload"
                             className="h-full w-full opacity-0 cursor-pointer absolute top-0 left-0"
