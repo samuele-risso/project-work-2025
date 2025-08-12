@@ -1,38 +1,25 @@
 from flask import Flask, request, jsonify
-import torch
-import torchvision.transforms as transforms
+import torch 
+from torchvision.transforms import transforms
 from PIL import Image
 import io
 
 class Net(torch.nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        # Layer convoluzionali che prima mancavano
         self.conv1 = torch.nn.Conv2d(3, 6, 5)
         self.pool = torch.nn.MaxPool2d(2, 2)
         self.conv2 = torch.nn.Conv2d(6, 16, 5)
-
-        # Il layer fc1 ha una dimensione di input di 3072, come richiesto dall'errore
-        self.fc1 = torch.nn.Linear(16 * 6 * 6, 128) # Assicurati che questa sia la dimensione corretta
-        # Questo valore, 3072, probabilmente deriva da un errore in un'altra parte dell'architettura
-        # o da un'immagine di input diversa. La dimensione 16 * 6 * 6 = 576
-        # Se l'errore ti dice che il modello si aspetta 3072, la riga corretta è:
-        # self.fc1 = torch.nn.Linear(3072, 128)
-
-        # I tuoi errori precedenti menzionavano fc2 con 2 classi
-        self.fc2 = torch.nn.Linear(128, 2) # Per il classificatore cane/gatto
-
+        self.fc1 = torch.nn.Linear(16 * 5 * 5, 128)  # Nota: ho corretto la dimensione del layer
+        self.fc2 = torch.nn.Linear(128, 2)
     def forward(self, x):
-        # I passaggi di forward devono riflettere i layer aggiunti
         x = self.pool(torch.nn.functional.relu(self.conv1(x)))
         x = self.pool(torch.nn.functional.relu(self.conv2(x)))
-
-        # Sostituisci x.view con torch.flatten per una maggiore robustezza
         x = torch.flatten(x, 1)
-
         x = torch.nn.functional.relu(self.fc1(x))
         x = self.fc2(x)
         return x
+# model = Net().to(device)
 
 app = Flask(__name__)
 
