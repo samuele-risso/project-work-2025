@@ -41,7 +41,7 @@ export default function FileUploader({ onFileChange }: FileUploaderProps) {
             <div className="md:flex">
                 <div className="w-full p-3">
                     <div
-                        className="relative h-72 rounded-lg border-2 border-blue-500 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                        className="relative h-72 rounded-lg border-2 border-amber-400 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
                     >
@@ -49,7 +49,8 @@ export default function FileUploader({ onFileChange }: FileUploaderProps) {
                             <img
                                 src={selectedImage}
                                 alt="Uploaded Preview"
-                                className="object-cover w-full h-full rounded-lg"
+                                // Modifica qui: da object-cover a object-contain
+                                className="object-contain w-full h-full rounded-lg"
                             />
                         ) : (
                             <div className="absolute flex flex-col items-center">

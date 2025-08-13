@@ -1,16 +1,29 @@
 "use client"
 
 import React from 'react';
-import { useKeycloak } from '@/hooks/useKeycloak'; // Importa il custom hook
-import Cards from "@/components/cards";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useKeycloak } from '@/hooks/useKeycloak';
 
 export default function Home() {
-  const { keycloak, authenticated } = useKeycloak();
+    const router = useRouter();
+    const { authenticated, userRoles } = useKeycloak();
 
-  return (
-    <div className="flex flex-row justify-center items-center gap-10 h-screen">
-      <Cards t1="Veicoli" t2="macchina o moto?" img="/veicoli.png" link="/macchina-moto" />
-      <Cards t1="Animali" t2="cane o gatto?" img="/animali.png" link="/cane-gatto" />
-    </div>
-  );
+    useEffect(() => {
+        if (authenticated && userRoles.length > 0) {
+            if (userRoles.includes('admin')) {
+                router.push('/role1');
+            } else if (userRoles.includes('pippo')) {
+                router.push('/role2');
+            } else {
+                router.push('/');
+            }
+        }
+    }, [authenticated, userRoles, router]);
+
+    return (
+        <div className="flex flex-row justify-center items-center gap-10 h-screen">
+            Benvenuto!
+        </div>
+    );
 }

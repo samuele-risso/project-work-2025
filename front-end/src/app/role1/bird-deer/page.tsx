@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import Button from "@/components/button";
 import FileUploader from "@/components/fileUploader";
+import PredictButton from "@/components/predictButton";
 
 export default function Animali() {
     const [file, setFile] = useState<File | null>(null);
@@ -22,7 +22,7 @@ export default function Animali() {
         formData.append("file", file);
 
         try {
-            const response = await fetch("http://localhost:5000/predict-animals", {
+            const response = await fetch("http://localhost:5000/bird-deer", {
                 method: "POST",
                 body: formData,
             });
@@ -42,17 +42,18 @@ export default function Animali() {
     };
 
     return (
-        <div className="flex flex-col p-10 gap-25">
-            <div className="flex justify-start items-start">
-                <Button onClick={handlePredict} />
-            </div>
-            <div className="flex flex-col justify-center items-center gap-6 h-full">
-                <h1 className="text-white text-center text-8xl mb-16">Cane o Gatto?</h1>
-                <FileUploader onFileChange={handleFileChange} />
-                {loading && <p className="text-white text-3xl">Caricamento...</p>}
-                {prediction && (
-                    <h1 className="text-green-500 text-5xl">{prediction}</h1>
-                )}
+        <div className="flex flex-col justify-center items-center h-full w-full p-20">
+            <div className="flex flex-col justify-center items-center gap-8 h-full w-full">
+                <div className="flex justify-center items-center text-2xl mr-30">
+                    <h1>What does the image represent?</h1>
+                </div>
+                <div className="flex flex-row justify-center items-center gap-8 w-full">
+                    <FileUploader onFileChange={handleFileChange} />
+                    <PredictButton action={handlePredict} />
+                </div>
+                <div className="flex justify-center items-center text-2xl text-black mr-30 h-10">
+                    <h1>{prediction}</h1>
+                </div>
             </div>
         </div>
     );

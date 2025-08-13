@@ -12,6 +12,7 @@ const initOptions = {
 export const useKeycloak = () => {
   const [keycloak, setKeycloak] = useState<Keycloak | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [userRoles, setUserRoles] = useState<string[]>([]); 
 
   useEffect(() => {
     const kc = new Keycloak(initOptions);
@@ -23,11 +24,15 @@ export const useKeycloak = () => {
       .then((auth) => {
         setKeycloak(kc);
         setAuthenticated(auth);
+        if (auth && kc.tokenParsed) {
+        const roles = kc.tokenParsed.realm_access?.roles || [];
+        setUserRoles(roles);
+      }
       })
       .catch((error) => {
         console.error('Failed to initialize Keycloak', error);
       });
   }, []);
 
-  return { keycloak, authenticated };
+  return { keycloak, authenticated, userRoles };
 };
