@@ -30,17 +30,15 @@ transform = transforms.Compose([
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 try:
-    vehicles_model = Net().to(device)
-    vehicles_model.load_state_dict(torch.load(PATH, map_location=device))
-    vehicles_model.eval()
-    print("Modello per veicoli caricato correttamente.")
+    model = Net().to(device)
+    model.load_state_dict(torch.load(PATH, map_location=device))
+    model.eval()
 except Exception as e:
-    print(f"Errore durante il caricamento del modello veicoli: {e}")
-    vehicles_model = None
+    model = None
 
 @ship_truck_bp.route('/ship-truck', methods=['POST'])
-def predict_vehicles():
-    if not vehicles_model:
+def predict():
+    if not model:
         return jsonify({"error": "Modello non disponibile"}), 503
 
     if 'file' not in request.files:
@@ -56,7 +54,7 @@ def predict_vehicles():
         image_tensor = transform(image).unsqueeze(0).to(device)
 
         with torch.no_grad():
-            outputs = vehicles_model(image_tensor)
+            outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
 
         predicted_class = classes[predicted[0]]

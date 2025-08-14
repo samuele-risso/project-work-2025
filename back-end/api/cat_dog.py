@@ -30,17 +30,15 @@ transform = transforms.Compose([
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 try:
-    animals_model = Net().to(device)
-    animals_model.load_state_dict(torch.load(PATH, map_location=device))
-    animals_model.eval()
-    print("Modello per animali caricato correttamente.")
+    model = Net().to(device)
+    model.load_state_dict(torch.load(PATH, map_location=device))
+    model.eval()
 except Exception as e:
-    print(f"Errore durante il caricamento del modello animali: {e}")
-    animals_model = None
+    model = None
 
 @cat_dog_bp.route('/cat-dog', methods=['POST'])
-def predict_animals():
-    if not animals_model:
+def predict():
+    if not model:
         return jsonify({"error": "Modello non disponibile"}), 503
         
     if 'file' not in request.files:
@@ -56,7 +54,7 @@ def predict_animals():
         image_tensor = transform(image).unsqueeze(0).to(device)
 
         with torch.no_grad():
-            outputs = animals_model(image_tensor)
+            outputs = model(image_tensor)
             _, predicted = torch.max(outputs.data, 1)
 
         predicted_class = classes[predicted[0]]

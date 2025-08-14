@@ -4,7 +4,8 @@ import Cards from "@/components/cards";
 export default function Role1() {
   return (
     <div className="flex flex-row justify-center items-center gap-10 h-screen">
-      <Cards t1="Vehicles" t2="ship or truck?" img="/veicoli.png" link="/role1/bird-deer" />
+      <Cards t1="Vehicles" t2="plane or car?" img="/veicoli.png" link="/role1/plane-car" />
+      <Cards t1="Animals" t2="bird or deer?" img="/animali.png" link="/role1/bird-deer" />
     </div>
   );
 }
