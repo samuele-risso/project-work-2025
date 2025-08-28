@@ -12,12 +12,12 @@ const initOptions = {
 export const useKeycloak = () => {
   const [keycloak, setKeycloak] = useState<Keycloak | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
-  const [userRoles, setUserRoles] = useState<string[]>([]); 
+  const [userRoles, setUserRoles] = useState<string[]>([]);
 
   useEffect(() => {
     const kc = new Keycloak(initOptions);
     kc.init({
-      onLoad: 'login-required',
+      onLoad: 'check-sso',
       checkLoginIframe: true,
       pkceMethod: 'S256'
     })
@@ -25,14 +25,17 @@ export const useKeycloak = () => {
         setKeycloak(kc);
         setAuthenticated(auth);
         if (auth && kc.tokenParsed) {
-        const roles = kc.tokenParsed.realm_access?.roles || [];
-        setUserRoles(roles);
-      }
+          const roles = kc.tokenParsed.realm_access?.roles || [];
+          setUserRoles(roles);
+        }
       })
       .catch((error) => {
         console.error('Failed to initialize Keycloak', error);
       });
   }, []);
 
-  return { keycloak, authenticated, userRoles };
+  const login = () => keycloak?.login();
+  const logout = () => keycloak?.logout();
+
+  return { keycloak, authenticated, userRoles, login, logout };
 };

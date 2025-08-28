@@ -29,7 +29,7 @@ export default function Cards({ t1, t2, img, link }: { t1: string, t2: string, i
                     className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-md focus-visible:ring-black"
                     href={link}
                 >
-                    Get started
+                    Recognise Image
                 </Link>
             </div>
         </div>

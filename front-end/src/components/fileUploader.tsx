@@ -41,7 +41,7 @@ export default function FileUploader({ onFileChange }: FileUploaderProps) {
             <div className="md:flex">
                 <div className="w-full p-3">
                     <div
-                        className="relative h-72 rounded-lg border-2 border-amber-400 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+                        className="relative h-72 rounded-lg border-2 border-black bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
                     >
