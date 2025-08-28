@@ -5,7 +5,7 @@ import FileUploader from "@/components/fileUploader";
 import PredictButton from "@/components/predictButton";
 import ResultsBunner from "@/components/resultsBunner";
 
-export default function Veicoli() {
+export default function Service() {
   const [file, setFile] = useState<File | null>(null);
   const [prediction, setPrediction] = useState<string>("");
   const [confidence, setConfidence] = useState<number | null>(null);
@@ -45,7 +45,6 @@ export default function Veicoli() {
 
       const result = await response.json();
 
-      // Impostiamo tutti i valori ritornati dall'API
       setPrediction(result.prediction);
       setConfidence(result.confidence);
       setProbabilities(result.probabilities);

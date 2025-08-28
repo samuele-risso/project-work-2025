@@ -35,7 +35,7 @@ export const useKeycloak = () => {
   }, []);
 
   const login = () => keycloak?.login();
-  const logout = () => keycloak?.logout();
+  const logout = () => keycloak?.logout({ redirectUri: window.location.origin + '/' });
 
   return { keycloak, authenticated, userRoles, login, logout };
 };

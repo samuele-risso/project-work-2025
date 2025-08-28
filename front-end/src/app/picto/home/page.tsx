@@ -23,7 +23,7 @@ export default function Home() {
       {/* Bottone */}
       <div className="flex">
         <Link 
-        href="/picto/service"
+        href="/picto/services"
         className="w-full p-3 bg-black text-white font-extrabold rounded hover:bg-gray-900">
           Let's start!
         </Link>
