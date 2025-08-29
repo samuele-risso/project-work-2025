@@ -5,6 +5,7 @@ import io
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
+import time
 
 plane_car_bp = Blueprint('plane-car', __name__)
 
@@ -53,12 +54,29 @@ def predict():
         image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
         image_tensor = transform(image).unsqueeze(0).to(device)
 
+        image_size = {"width": image.width, "height": image.height}
+        image_format = image.format if image.format else "unknown"
+
+        start_time = time.time()
+
         with torch.no_grad():
             outputs = model(image_tensor)
+            probabilities = torch.softmax(outputs, dim=1).cpu().numpy()[0]
+            confidence = float(probabilities.max()) * 100
             _, predicted = torch.max(outputs.data, 1)
 
+        inference_time_ms = (time.time() - start_time) * 1000
         predicted_class = classes[predicted[0]]
-        return jsonify({"prediction": predicted_class})
 
+        prob_dict = {cls: float(probabilities[i]) for i, cls in enumerate(classes)}
+
+        return jsonify({
+            "prediction": predicted_class,
+            "confidence": round(confidence, 2),
+            "probabilities": prob_dict,
+            "inference_time_ms": round(inference_time_ms, 2),
+            "image_size": image_size,
+            "image_format": image_format
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500

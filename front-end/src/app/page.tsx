@@ -1,9 +1,14 @@
-import React from 'react';
+'use client'
 
-export default function Home() {
-    return (
-        <div className="flex flex-row justify-center items-center gap-10 h-screen">
-            Benvenuto!
-        </div>
-    );
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function RootRedirect() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/home');
+  }, [router]);
+
+  return null;
 }

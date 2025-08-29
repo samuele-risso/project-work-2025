@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-10 mb-40">
+    <div className="flex flex-col justify-center items-center h-screen gap-10 mb-10">
       {/* Logo + testo */}
       <div className="flex flex-col items-center">
         <Image
@@ -23,7 +23,7 @@ export default function Home() {
       {/* Bottone */}
       <div className="flex">
         <Link 
-        href="/picto/services"
+        href="/picto/chat"
         className="w-full p-3 bg-black text-white font-extrabold rounded hover:bg-gray-900">
           Let's start!
         </Link>

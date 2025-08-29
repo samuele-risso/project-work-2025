@@ -25,12 +25,12 @@ export default function NavBar() {
     return (
         <div className="flex flex-row justify-between h-auto text-white p-2 mx-10">
             <div>
-                <Image
+                {/* <Image
                     src="/picto_logo_p.png"
                     alt="picto_logo"
                     height={50}
                     width={130}
-                />
+                /> */}
             </div>
             <div>
                 {authenticated ? (
