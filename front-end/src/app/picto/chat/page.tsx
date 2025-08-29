@@ -102,15 +102,22 @@ export default function Chat() {
     }
   };
 
+  const modalities = [
+    { value: "ship-truck", label: "ship - truck" },
+    { value: "cat-dog", label: "cat - dog" },
+    { value: "plane-car", label: "plane - car" },
+    { value: "bird-deer", label: "bird - deer" },
+  ]
+
   return (
     <div className="flex h-screen w-full">
       {/* Sidebar */}
       <div
-        className={`${sidebarOpen ? "w-64" : "w-16"
-          } bg-gray-900 text-white flex flex-col transition-all duration-300`}
+        className={`${sidebarOpen ? "w-64" : "w-16"} bg-black text-white flex flex-col transition-all duration-300`}
       >
+        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          {sidebarOpen}
+          {sidebarOpen && <span className="font-semibold text-lg">Menu</span>}
           <button
             onClick={() => setSidebarOpen((prev) => !prev)}
             className="text-gray-400 hover:text-white"
@@ -119,56 +126,46 @@ export default function Chat() {
           </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
-          <div>
+        {/* Navigation */}
+        <nav className="flex-1 p-2 space-y-4">
+
+          {/* New Chat Section */}
+          <div className="px-2 py-2 border-b border-gray-100">
             <button
               onClick={handleClearChat}
-              className="block p-2 rounded hover:bg-gray-800 transition text-xl"
+              className="flex items-center w-full p-2 rounded hover:bg-gray-800 transition text-lg"
             >
-              {sidebarOpen ? "New Chat" : <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mx-auto"
-              >
-                <path d="M2 3h20v14H6l-4 4V3z" />
-                <line x1="6" y1="7" x2="18" y2="7" />
-                <line x1="6" y1="11" x2="12" y2="11" />
-              </svg>}
+              {sidebarOpen ? "New Chat" : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mx-auto"
+                >
+                  <path d="M2 3h20v14H6l-4 4V3z" />
+                  <line x1="6" y1="7" x2="18" y2="7" />
+                  <line x1="6" y1="11" x2="12" y2="11" />
+                </svg>
+              )}
             </button>
           </div>
 
-          <div>
-            {sidebarOpen ? <h1 className="ml-2 text-xl">Modalities:</h1> : ""}
-            <ul>
-              {modes.map((mode) => (
-                <li className="mx-4" key={mode.value}>
-                  <button
-                    onClick={() => setSelectedMode(mode.value)}
-                    className={`block w-full text-start p-2 rounded hover:bg-gray-800 transition 
-                      ${selectedMode === mode.value ? "bg-gray-700" : ""}`}
-                  >
-                    {sidebarOpen ? mode.label : mode.icon}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <button className="block p-2 rounded hover:bg-gray-800 transition">
+          {/* History Section */}
+          <div className="px-2 py-2 border-gray-100">
+            <button className="flex items-center w-full p-2 rounded hover:bg-gray-800 transition">
               {sidebarOpen ? "History" : "📜"}
             </button>
           </div>
 
         </nav>
 
+        {/* Footer */}
         <div className="p-4 border-t border-gray-700">
           {sidebarOpen ? "Logged in" : "👤"}
         </div>
@@ -197,7 +194,7 @@ export default function Chat() {
                 >
                   <div
                     className={`max-w-full p-3 rounded-2xl text-sm whitespace-pre-wrap ${msg.role === "user"
-                      ? "bg-blue-500 text-white rounded-br-none"
+                      ? "bg-blue-600 text-white rounded-br-none"
                       : "bg-white border text-gray-800 rounded-bl-none"
                       }`}
                   >
@@ -220,49 +217,66 @@ export default function Chat() {
           </div>
         )}
 
-        {/* Input */}
+        {/* Input + Modalities Container */}
         <div
-          className={`flex flex-row items-center gap-2 w-2/4 pb-8 bg-gray-100 transition-all duration-300 ${showIntro && messages.length === 0 ? "absolute bottom-1/3" : "absolute bottom-0"
+          className={`flex flex-col items-center w-2/4 transition-all duration-300 ${showIntro && messages.length === 0 ? "absolute bottom-1/4" : "absolute bottom-0"
             }`}
         >
-          <label
-            htmlFor="file-upload"
-            className="flex flex-1 items-start border rounded-lg p-2 pl-4 bg-white cursor-pointer text-gray-700 text-center"
-          >
-            {file ? file.name : "Upload an image"} {/* testo personalizzato */}
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden" // nasconde il default "No file chosen"
-          />
-          <button
-            onClick={handleSend}
-            disabled={!file || loading}
-            className="bg-blue-500 hover:bg-blue-600 disabled:bg-black text-white px-4 py-2 rounded-lg border h-full"
-          >
-            {loading ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 animate-pulse"
-                fill="currentColor"
-                viewBox="0 0 24 24"
+          {/* Input */}
+          <div className="flex flex-row items-center gap-2 w-full mb-2">
+            <label
+              htmlFor="file-upload"
+              className="flex flex-1 items-start border rounded-lg p-2 pl-4 bg-white cursor-pointer text-gray-700 text-center"
+            >
+              {file ? file.name : "Upload an image"}
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <button
+              onClick={handleSend}
+              disabled={!file || loading}
+              className="bg-blue-500 hover:bg-blue-600 disabled:bg-black text-white px-4 py-2 rounded-lg borderh-full"
+            >
+              {loading ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 animate-pulse"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <rect x="4" y="4" width="16" height="16" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+          {/* Modalities */}
+          <div className="flex items-center justify-around bg-black w-full h-10 rounded-lg gap-5 p-4 mb-6">
+            {modalities.map((mode) => (
+              <button
+                key={mode.label}
+                onClick={() => setSelectedMode(mode.value)}
+                className={`w-auto h-10 font-bold rounded-none flex items-center justify-center p-2 transition-transform duration-300 hover:-translate-y-1 ${selectedMode === mode.value ? "text-blue-500" : "text-white"
+                  }`}
               >
-                <rect x="4" y="4" width="16" height="16" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-              </svg>
-            )}
-          </button>
+                {mode.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
