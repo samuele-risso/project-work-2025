@@ -28,7 +28,7 @@ export default function UserDropdown(
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-12 h-12 bg-white rounded-full p-2 m-2 border border-black"
+          className="w-12 h-10 bg-white border-l-1 border-gray-700 pl-4"
         >
           <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
@@ -37,15 +37,15 @@ export default function UserDropdown(
 
       {/* Dropdown menu */}
       {isOpen && (
-        <div className="absolute right-0 mx-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-          <div className="py-1">
+        <div className="absolute top-0 left-full ml-2 bg-trasparent z-50 flex flex-row">
+          <div className="flex flex-row gap-5 px-2">
             {/* Impostazioni */}
             <Link
               href=""
-              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="flex justify-end items-center w-full py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-full"
             >
               <svg
-                className="w-5 h-5 text-gray-500"
+                className="w-6 h-6 text-gray-500 shadow-lg rounded-full"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -67,11 +67,11 @@ export default function UserDropdown(
 
             {/* Profilo */}
             <Link
-              href=""
-              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              href="/reunion/profile"
+              className="flex justify-end items-center w-full py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-full"
             >
               <svg
-                className="w-5 h-5 text-gray-500"
+                className="w-7 h-7 text-gray-500  shadow-md rounded-full"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -89,10 +89,10 @@ export default function UserDropdown(
             {/* Logout */}
             <button
               onClick={logOut}
-              className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-100"
+              className="flex justify-end items-center w-full py-2 text-sm text-red-600 hover:bg-red-100 hover:rounded-full"
             >
               <svg
-                className="w-5 h-5 text-red-600"
+                className="w-7 h-7 text-red-600  shadow-md rounded-full"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
