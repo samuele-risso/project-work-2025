@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
-from api.cat_dog import cat_dog_bp
-from api.ship_truck import ship_truck_bp
-from api.bird_deer import bird_deer_bp
-from api.plane_car import plane_car_bp
+from picto_api.cat_dog import cat_dog_bp
+from picto_api.ship_truck import ship_truck_bp
+from picto_api.bird_deer import bird_deer_bp
+from picto_api.plane_car import plane_car_bp
 
 app = Flask(__name__)
 CORS(app)

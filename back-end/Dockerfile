@@ -8,7 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./app.py .
 COPY ./models ./models
-COPY ./api ./api
+COPY ./picto_api ./picto_api
+COPY ./detector_api ./detector_api
 
 ENV PYTHONPATH=/app
 
